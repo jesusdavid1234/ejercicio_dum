@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Registro</title>
+  <link rel="stylesheet" href="stulo.css">
+  <script>
+    //aqui valido el formulario
+    function validarFormulario(event) {
+
+      event.preventDefault();
+
+      //obtengo los valores del campo
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const contraseña = document.getElementById('contraseña').value.trim();
+
+      // los errrores que puede tener
+      let errores = [];
+
+      //valido el nombre
+      if (nombre === '') {
+        errores.push('El nombre es obligatorio.');
+      }
+
+      //valido el apellido
+      if (apellido === '') {
+        errores.push('El apellido es obligatorio.');
+      }
+
+      //valido el email
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (email === '') {
+        errores.push('el email es obligatorio.');
+      } else if (!emailRegex.test(email)) {
+        errores.push('el email no tiene un formato válido.');
+      }
+
+      //valido la contraseña
+      if (contraseña === '') {
+        errores.push('la contraseña es obligatoria.');
+      } else if (contraseña.length < 6) {
+        errores.push('la contraseña debe tener al menos 6 caracteres.');
+      }
+
+      //aque muestro los mesajes de errores 
+      const mensajeError = document.getElementById('mensajeError');
+      const mensajeExito = document.getElementById('mensajeExito');
+
+      if (errores.length > 0) {
+        mensajeError.innerHTML = errores.join('<br>');
+        mensajeError.style.color = 'red';
+        mensajeExito.innerHTML = '';  //limpio el mensaje
+      } else {
+        mensajeError.innerHTML = '';
+        mensajeExito.innerHTML = 'formulario enviado correctamente!';
+        mensajeExito.style.color = 'green';
+
+        //aquie se mestre en la consola
+        console.log('formulario enviado con los siguientes datos:');
+        console.log('nombre:', nombre);
+        console.log('apellido:', apellido);
+        console.log('email:', email);
+        console.log('contraseña:', contraseña);
+      }
+    }
+  </script>
+</head>
+
+<body>
+
+  <h2>Formulario de Registro</h2>
+
+  ->
+  <div id="mensajeError"></div>
+  <div id="mensajeExito"></div>
+
+
+  <form id="registroForm" onsubmit="validarFormulario(event)">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required><br><br>
+
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="contraseña">Contraseña:</label>
+    <input type="password" id="contraseña" name="contraseña" required><br><br>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+</body>
+
+</html>
