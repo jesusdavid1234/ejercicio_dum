@@ -1,133 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busqueda en una tabla con JS</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Registro</title>
+  <link rel="stylesheet" href="stulo.css">
+  <script>
+    //aqui valido el formulario
+    function validarFormulario(event) {
 
+      event.preventDefault();
 
-    <link rel="stylesheet" href="estilos.css">
+      //obtengo los valores del campo
+      const nombre = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const contraseña = document.getElementById('contraseña').value.trim();
+
+      // los errrores que puede tener
+      let errores = [];
+
+      //valido el nombre
+      if (nombre === '') {
+        errores.push('El nombre es obligatorio.');
+      }
+
+      //valido el apellido
+      if (apellido === '') {
+        errores.push('El apellido es obligatorio.');
+      }
+
+      //valido el email
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (email === '') {
+        errores.push('el email es obligatorio.');
+      } else if (!emailRegex.test(email)) {
+        errores.push('el email no tiene un formato válido.');
+      }
+
+      //valido la contraseña
+      if (contraseña === '') {
+        errores.push('la contraseña es obligatoria.');
+      } else if (contraseña.length < 6) {
+        errores.push('la contraseña debe tener al menos 6 caracteres.');
+      }
+
+      //aque muestro los mesajes de errores 
+      const mensajeError = document.getElementById('mensajeError');
+      const mensajeExito = document.getElementById('mensajeExito');
+
+      if (errores.length > 0) {
+        mensajeError.innerHTML = errores.join('<br>');
+        mensajeError.style.color = 'red';
+        mensajeExito.innerHTML = '';  //limpio el mensaje
+      } else {
+        mensajeError.innerHTML = '';
+        mensajeExito.innerHTML = 'formulario enviado correctamente!';
+        mensajeExito.style.color = 'green';
+
+        //aquie se mestre en la consola
+        console.log('formulario enviado con los siguientes datos:');
+        console.log('nombre:', nombre);
+        console.log('apellido:', apellido);
+        console.log('email:', email);
+        console.log('contraseña:', contraseña);
+      }
+    }
+  </script>
 </head>
 
 <body>
-    <div class="">
 
-    </div>
-    <div class="ContenedorBusqueda">
+  <h2>Formulario de Registro</h2>
 
-        <h1>Búsqueda en una Tabla con JavaScript</h1>
-        <div class="busqueda">
-            <div class="Busqueda-Inside">
-                <input type="text" name="search" placeholder="Buscar" id="Buscar">
-                <div class="BotonBuscar">
-
-                </div>
-            </div>
-        </div>
-
-        <button type="submit" class="boton" onclick="buscar()">
-            <span>BUSCAR</span>
-        </button>
-
-        <div id="resultado">
-
-        </div>
-    </div>
+  ->
+  <div id="mensajeError"></div>
+  <div id="mensajeExito"></div>
 
 
-    <div class="contenedorTabla">
-        <h1 id="titulo">Tabla</h1>
-        <table id="tabla">
-            <thead>
-                <tr>
-                    <th>Verbo</th>
-                    <th>Definición</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Camninar</td>
-                    <td>el acto de moverse de un lugar a otro utilizando los pies, con una serie de pasos alternados.
-                    </td>
-                </tr>
-                <tr>
-                    <td>escribir</td>
-                    <td>expresar pensamientos, ideas, o información mediante el uso de signos, símbolos o letras,
-                        generalmente sobre un soporte como papel, pantalla digital o cualquier otra superficie. .</td>
-                </tr>
+  <form id="registroForm" onsubmit="validarFormulario(event)">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required><br><br>
 
-                <tr>
-                    <td>hablar</td>
-                    <td>se refiere a la acción de emitir sonidos articulados, generalmente con el propósito de
-                        comunicarse, expresar pensamientos, ideas o sentimientos mediante el lenguaje verbal.</td>
-                </tr>
-                <tr>
-                    <td>estudiar</td>
-                    <td>Interpretar los signos o palabras de un texto.</td>
-                </tr>
-                <tr>
-                    <td>Cantar</td>
-                    <td>Producir sonidos melodiosos, generalmente acompañados de notas musicales, con el propósito de
-                        crear una canción o melodía.</td>
-                </tr>
-                <tr>
-                    <td>leer</td>
-                    <td>se refiere a la acción de interpretar y comprender un texto, ya sea escrito o impreso,
-                        utilizando los ojos y el cerebro..</td>
-                </tr>
-                <tr>
-                    <td>Comer</td>
-                    <td>se refiere a la acción de ingerir alimentos o sustancia comestibles a través de la boca. </td>
-                </tr>
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="apellido" required><br><br>
 
-                <tr>
-                    <td>Viajar</td>
-                    <td>se refiere a la acción de desplazarse de un lugar a otro, generalmente a una distancia
-                        considerable, ya sea por razones de trabajo, placer, estudios, o cualquier otro motivo..</td>
-                </tr>
-                <tr>
-                    <td>Escuchar</td>
-                    <td>se refiere a la acción de prestar atención y percibir los sonidos a través del sentido del oído,
-                        con el objetivo de entender o captar lo que se está oyendo.</td>
-                </tr>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
 
-            </tbody>
-        </table>
-    </div>
+    <label for="contraseña">Contraseña:</label>
+    <input type="password" id="contraseña" name="contraseña" required><br><br>
 
-
-
-    <script>
-        function buscar() {
-            //aqui obtengo el valor de la busqueda
-            const filtro = document.getElementById("Buscar").value.toUpperCase();
-            const tabla = document.getElementById("tabla");
-            const filas = tabla.getElementsByTagName("tr");
-
-            //aque reccorro la fila
-            for (let i = 1; i < filas.length; i++) {
-                const celdas = filas[i].getElementsByTagName("td");
-                let encontrado = false;
-
-                //comprube si coincide con la busqueda
-                for (let j = 0; j < celdas.length; j++) {
-                    const textoCelda = celdas[j].textContent || celdas[j].innerText;
-                    if (textoCelda.toUpperCase().indexOf(filtro) > -1) {
-                        encontrado = true;
-                        break;
-                    }
-                }
-
-                // aque encunetro la busqueda de la lista sino la oculta
-                if (encontrado) {
-                    filas[i].style.display = "";
-                } else {
-                    filas[i].style.display = "none";
-                }
-            }
-        }
-    </script>
+    <button type="submit">Enviar</button>
+  </form>
 
 </body>
 
